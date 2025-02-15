@@ -16,6 +16,9 @@ clonando o projeto na sua maquina:
 ```js
 gh repo clone carlosmartos13/todolist
 ``` 
+ou
+baixe o arquivo zip no botão download
+*
 instale as dependencias
 ```js
 npm install
