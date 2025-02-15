@@ -11,6 +11,7 @@ este projeto é um estudo de react, feito com ajuda de intelegencia artificial c
 ## instalação ###
 
 para instalar o projeto basta seguir os seguintes comandos:
+***
 clonando o projeto na sua maquina:
 ```js
 gh repo clone carlosmartos13/todolist
