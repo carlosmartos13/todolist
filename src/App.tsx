@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckSquare, ClipboardList, Trash2, GripVertical }from 'lucide-react';
+import { Circle, CheckCircle, PlusCircle, Trash2, GripVertical } from 'lucide-react';
 import {
   DndContext,
   closestCenter,
@@ -15,6 +15,8 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { SortableItem } from './components/SortableItem';
+
+import Logo from '../src/assets/Logo.svg';
 
 interface Todo {
   id: string;
@@ -74,31 +76,39 @@ function App() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <header className="flex items-center justify-center mb-8">
-          <ClipboardList className="w-8 h-8 text-indigo-600 mr-2" />
-          <h1 className="text-3xl font-bold text-gray-800">Todo List</h1>
-        </header>
+  const totalTasks = todos.length;
+  const completedTasks = todos.filter(todo => todo.completed).length;
 
+  return (
+    <div className="min-h-screen bg-[#1A1A1A]">
+      <div className="w-full bg-black h-[12.5rem] flex items-center justify-center -mb-16">
+        <img src={Logo} alt="Logo" className="w-36 mx-20" />
+      </div>
+
+      <div className="container mx-auto px-4 py-8 max-w-2xl -mt-16">
         <form onSubmit={handleAddTodo} className="mb-8">
           <div className="flex gap-2">
             <input
               type="text"
               value={newTodo}
               onChange={(e) => setNewTodo(e.target.value)}
-              placeholder="Add a new task..."
-              className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              placeholder="Adicione uma nova tarefa"
+              className="flex-1 px-4 py-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
             <button
               type="submit"
-              className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors"
+              className="px-6 py-4 bg-[#1E6F9F] text-white rounded-lg hover:bg-opacity-[0.5] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors flex items-stretch-center"
             >
-              Add
+              Criar
+              <PlusCircle  className='ml-1'/>
             </button>
           </div>
         </form>
+
+        <div className="flex justify-between mb-4 text-lg">
+          <span className="text-white text-[#4EA8DE] flex justify-left">Tarefas Criadas:  <span className='text-gray-100 bg-[#333333] pl-2 pr-2 rounded-full ml-2'>{totalTasks}</span></span>
+          <span className="text-[#8284FA]">Concluidas: <span className='bg-[#333333] text-[#D9D9D9] pl-2 pr-2 rounded-full ' >{totalTasks} de {completedTasks}</span></span>
+        </div>
 
         <DndContext
           sensors={sensors}
@@ -111,14 +121,14 @@ function App() {
                 <SortableItem
                   key={todo.id}
                   id={todo.id}
-                  className={`bg-white rounded-lg shadow-sm border border-gray-100 ${
-                    todo.completed ? 'bg-gray-50' : ''
+                  className={`   ${
+                    todo.completed ? 'bg-red' : ''
                   }`}
                 >
-                  <div className={`${
+                  <div className={` bg-[#262626] rounded-md ${
                           todo.completed
-                            ? 'flex items-center justify-between p-4 group transition-colors bg-gray-100 '
-                            : 'flex items-center justify-between p-4 group'
+                            ? 'flex items-center justify-between p-4 group transition-colors '
+                            : 'flex items-center justify-between p-4 group '
                         }`}
                             >
                     <div className="flex items-center gap-3">
@@ -127,17 +137,21 @@ function App() {
                       </div>
                       <button
                         onClick={() => toggleTodo(todo.id)}
-                        className={`p-1 rounded hover:bg-gray-100 transition-colors ${
+                        className={`p-1 rounded transition-colors ${
                           todo.completed ? 'text-green-500' : 'text-gray-400'
                         }`}
                       >
-                        <CheckSquare className="w-5 h-5" />
+                        {todo.completed ? (
+                          <CheckCircle className="w-5 h-5 text-[#16aa02] bg-[#292a52] border-[#5E60CE] rounded-full " />
+                        ) : (
+                          <Circle className="w-5 h-5 text-[#4EA8DE]" />
+                        )}
                       </button>
                       <span
                         className={`${
                           todo.completed
-                            ? 'line-through text-gray-'
-                            : 'text-gray-700'
+                            ? 'line-through text-[#808080]'
+                            : 'text-[#F2F2F2]'
                         }`}
                       >
                         {todo.text}
